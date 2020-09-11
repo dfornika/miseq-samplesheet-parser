@@ -12,6 +12,8 @@ samplesheet_parser.py SampleSheet.csv | python -m json.tool
 
 ## Example Input & Output
 
+### Input
+
 ```
 [Header]
 IEMFileVersion,5
@@ -37,6 +39,8 @@ S1,SAMPLE_01,,,A01,H701,TAAGGCGA,H505,GTAAGGAG,,,
 S2,SAMPLE_02,,,B01,H702,CGTACTAG,H517,GCGTAAGA,,,
 ```
 
+### Output
+
 ```
 {
     "header": {
@@ -53,9 +57,32 @@ S2,SAMPLE_02,,,B01,H702,CGTACTAG,H517,GCGTAAGA,,,
         "chemistry": "Amplicon"
     },
     "data": [
-        "Sample_ID,Sample_Name,Sample_Plate,Sample_Well,Index_Plate_Well,I7_Index_ID,index,I5_Index_ID,index2,Sample_Project,Description",
-        "S1,SAMPLE_01,,,A01,H701,TAAGGCGA,H505,GTAAGGAG,,,",
-        "S2,SAMPLE_02,,,B01,H702,CGTACTAG,H517,GCGTAAGA,,,"
+        {
+            "sample_id": "S1",
+            "sample_name": "SAMPLE_01",
+            "sample_plate": "",
+            "sample_well": "",
+            "index_plate_well": "A01",
+            "i7_index_id": "H701",
+            "index": "TAAGGCGA",
+            "i5_index_id": "H505",
+            "index2": "GTAAGGAG",
+            "sample_project": "",
+            "description": ""
+        },
+        {
+            "sample_id": "S2",
+            "sample_name": "SAMPLE_02",
+            "sample_plate": "",
+            "sample_well": "",
+            "index_plate_well": "B01",
+            "i7_index_id": "H702",
+            "index": "CGTACTAG",
+            "i5_index_id": "H517",
+            "index2": "GCGTAAGA",
+            "sample_project": "",
+            "description": ""
+        }
     ]
 }
 ```

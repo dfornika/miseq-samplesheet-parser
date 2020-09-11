@@ -5,7 +5,7 @@ import json
 
 from pprint import pprint
 
-def parse_header(path_to_sample_sheet):
+def parse_header_section(path_to_sample_sheet):
   header_lines = []
   header = {}
   with open(path_to_sample_sheet, 'r') as f:
@@ -24,8 +24,7 @@ def parse_header(path_to_sample_sheet):
               
   return header
 
-def parse_data(path_to_sample_sheet):
-  data_lines = []
+def parse_data_section(path_to_sample_sheet):
   data = []
   with open(path_to_sample_sheet, 'r') as f:
       for line in f:
@@ -33,15 +32,24 @@ def parse_data(path_to_sample_sheet):
               continue
           else:
               break
+          
+      data_header = [x.lower() for x in next(f).strip().split(',')]
+      
       for line in f:
-          data.append(line.strip())
+          data_line = {}
+          for idx, data_element in enumerate(line.strip().split(',')):
+              try:
+                data_line[data_header[idx]] = data_element
+              except IndexError as e:
+                  pass
+          data.append(data_line)
 
   return data
           
 def main(args):
   sample_sheet = {}
-  header = parse_header(args.sample_sheet)
-  data = parse_data(args.sample_sheet)
+  header = parse_header_section(args.sample_sheet)
+  data = parse_data_section(args.sample_sheet)
   sample_sheet['header'] = header
   sample_sheet['data'] = data
 
