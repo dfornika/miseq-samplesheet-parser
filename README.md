@@ -5,3 +5,7 @@ Parse illumina MiSeq SampleSheet.csv files and convert to JSON
 ```
 samplesheet_parser.py SampleSheet.csv
 ```
+
+```
+samplesheet_parser.py SampleSheet.csv | python -m json.tool
+```
