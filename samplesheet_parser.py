@@ -19,10 +19,63 @@ def parse_header_section(path_to_sample_sheet):
 
   for line in header_lines:
       header_key = line.split(',')[0].lower().replace(" ", "_")
-      header_value = line.split(',')[1]
-      header[header_key] = header_value
+
+      if len(line.split(',')) > 1:
+        header_value = line.split(',')[1]
+      else:
+        header_value = ""
+
+      if header_key != "":
+        header[header_key] = header_value
               
   return header
+
+
+def parse_reads_section(path_to_sample_sheet):
+  reads_lines = []
+  reads = []
+  with open(path_to_sample_sheet, 'r') as f:
+      for line in f:
+          if line.strip().startswith('[Reads]'):
+              break
+      for line in f:
+          if line.strip().startswith('[Settings]'):
+              break
+          reads_lines.append(line.strip().rstrip(','))
+
+  for line in reads_lines:
+    if line != "":
+      read_len = int(line.split(',')[0])
+      reads.append(read_len)
+
+  return reads
+
+
+def parse_settings_section(path_to_sample_sheet):
+  settings_lines = []
+  settings = {}
+  with open(path_to_sample_sheet, 'r') as f:
+      for line in f:
+          if line.strip().startswith('[Settings]'):
+              break
+      for line in f:
+          if line.strip().startswith('[Data]'):
+              break
+          settings_lines.append(line.strip().rstrip(','))
+
+  for line in settings_lines:
+      settings_key = line.split(',')[0].lower().replace(" ", "_")
+
+      if len(line.split(',')) > 1:
+        settings_value = line.split(',')[1]
+      else:
+        settings_value = ""
+
+      if settings_key != "":
+        settings[settings_key] = settings_value
+              
+  return settings
+
 
 def parse_data_section(path_to_sample_sheet):
   data = []
@@ -49,8 +102,12 @@ def parse_data_section(path_to_sample_sheet):
 def main(args):
   sample_sheet = {}
   header = parse_header_section(args.sample_sheet)
+  settings = parse_settings_section(args.sample_sheet)
+  reads = parse_reads_section(args.sample_sheet)
   data = parse_data_section(args.sample_sheet)
   sample_sheet['header'] = header
+  sample_sheet['settings'] = settings
+  sample_sheet['reads'] = reads
   sample_sheet['data'] = data
 
   print(json.dumps(sample_sheet))
