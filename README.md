@@ -56,6 +56,14 @@ S2,SAMPLE_02,,,B01,H702,CGTACTAG,H517,GCGTAAGA,,,
         "description": "Our most precious samples",
         "chemistry": "Amplicon"
     },
+    "reads": [
+        251,
+        251
+    ],
+    "settings": {
+        "adapter": "CTGTCTCTTATACACATCT",
+        "reversecomplement": "0"
+    }
     "data": [
         {
             "sample_id": "S1",
